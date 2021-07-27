@@ -1,0 +1,162 @@
+// BLOCK: COLLAPSIBLE
+// --------------------------------------------------------------------
+@use "./mixins";
+
+$title-color: #4a4d4a !default;
+$title-hover-color: #0080c8 !default;
+$title-active-color: #73b128 !default;
+$title-font: null !default;
+$title-active-font: null !default;
+$title-font-size: 1.125em !default;
+$title-text-transform: uppercase !default;
+
+$line-color: #e7e7e7 !default;
+$line-thickness: 2px !default;
+
+$indicator-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23a0a0a0' viewBox='0 0 27 15'%3E%3Cpath d='M14.313 14.361l12-12c.5-.5.5-1.2 0-1.7s-1.2-.5-1.7 0l-11.1 11.2-11.2-11.2c-.5-.5-1.2-.5-1.7 0-.2.2-.3.5-.3.8 0 .3.1.7.3.9l12 12a1.2 1.2 0 001.7 0z'/%3E%3C/svg%3E") !default;
+$indicator-hover-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230080c8' viewBox='0 0 27 15'%3E%3Cpath d='M14.313 14.361l12-12c.5-.5.5-1.2 0-1.7s-1.2-.5-1.7 0l-11.1 11.2-11.2-11.2c-.5-.5-1.2-.5-1.7 0-.2.2-.3.5-.3.8 0 .3.1.7.3.9l12 12a1.2 1.2 0 001.7 0z'/%3E%3C/svg%3E") !default;
+$indicator-active-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2373b128' viewBox='0 0 27 15'%3E%3Cpath d='M14.313 14.361l12-12c.5-.5.5-1.2 0-1.7s-1.2-.5-1.7 0l-11.1 11.2-11.2-11.2c-.5-.5-1.2-.5-1.7 0-.2.2-.3.5-.3.8 0 .3.1.7.3.9l12 12a1.2 1.2 0 001.7 0z'/%3E%3C/svg%3E") !default;
+$indicator-width: 1.5em !default;
+$indicator-height: 0.8125em !default;
+
+$content-border-left: 2px solid $title-active-color !default;
+
+.ghwp-accordion {
+    font-size: 1rem;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    $block: &;
+
+    &.is-style-small {
+        #{$block}__item {
+            &-title {
+                margin: 0.5em 0;
+                padding: 0.625em 0;
+
+                &-text {
+                    font-size: 1em;
+                }
+
+                &-arrow {
+                    height: 0.625em;
+                    width: 1.125em;
+                }
+            }
+        }
+    }
+}
+
+.ghwp-accordion__item {
+    font-size: 1rem;
+
+    &-title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        button {
+            @include mixins.unstyled-button;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 1em 0;
+            padding: 0.625em 0;
+            width: 100%;
+
+            &:hover,
+            &:focus,
+            &:active {
+                text-decoration: none !important;
+            }
+        }
+
+        &-text,
+        :not(.ghwp-collapsible__subtitle):not(button, button *):not(hr) {
+            font-size: $title-font-size;
+            color: $title-color;
+            text-decoration: none;
+            text-transform: $title-text-transform;
+            font-family: $title-font;
+        }
+
+        &-line {
+            border: none;
+            border-top: $line-thickness solid $line-color;
+            display: flex;
+            flex-grow: 1;
+            margin: 0 2em;
+        }
+
+        &-arrow {
+            display: block;
+            width: $indicator-width;
+            height: $indicator-height;
+            background-image: $indicator-image;
+            background-repeat: no-repeat;
+            background-size: cover;
+            transition: transform 0.2s ease-in-out;
+        }
+        $title: &;
+
+        &:hover {
+            #{$title}-text {
+                color: $title-hover-color;
+            }
+
+            #{$title}-arrow {
+                background-image: $indicator-hover-image;
+            }
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            box-shadow: none !important;
+            outline: 0 !important;
+        }
+    }
+
+    &-content {
+        border-left: $content-border-left;
+        padding-left: 2em;
+        margin-top: 0;
+        margin-bottom: 0;
+        position: relative;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.2s linear, margin-top 0.2s linear,
+            margin-bottom 0.2s linear !important;
+    }
+
+    $item: &;
+
+    &.is-open {
+        #{$item}-title {
+            &-text {
+                font-family: $title-active-font;
+                color: $title-active-color;
+            }
+
+            &-arrow {
+                transform: rotate(180deg);
+                background-image: $indicator-active-image;
+            }
+        }
+
+        #{$item}-content {
+            margin-top: 2em;
+            margin-bottom: 4em;
+            height: auto;
+            max-height: 1080px !important;
+            overflow-y: auto;
+        }
+
+        #{$item}-content--limited {
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+    }
+}

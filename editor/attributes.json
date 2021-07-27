@@ -1,0 +1,23 @@
+{
+    "heading": {
+        "type": "string"
+    },
+    "hasSubtitle": {
+        "type": "boolean",
+        "default": false
+    },
+    "inner": {
+        "type": "array",
+        "source": "children"
+    },
+    "initiallyOpen": {
+        "type": "boolean",
+        "default": false
+    },
+    "prettyName": {
+        "type": "string"
+    },
+    "subtitle": {
+        "type": "string"
+    }
+}

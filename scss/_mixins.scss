@@ -1,0 +1,28 @@
+@mixin unstyled-button($fg: inherit) {
+    background: transparent;
+    background-clip: padding-box;
+    border: 0;
+    border-radius: 0;
+    color: $fg;
+    display: inline-block;
+    line-height: normal;
+    padding: 0;
+    text-align: left;
+    text-decoration: none;
+    text-shadow: none;
+    white-space: nowrap;
+    width: auto;
+
+    &:active,
+    &:hover,
+    &:focus {
+        background: transparent;
+        color: $fg;
+        text-decoration: underline;
+    }
+
+    &:focus {
+        box-shadow: none;
+        z-index: auto;
+    }
+}

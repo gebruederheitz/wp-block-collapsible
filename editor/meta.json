@@ -1,0 +1,9 @@
+{
+  "name": "ghwp/collapsible",
+  "prettyName": "Collapsible",
+  "description": "A collapsible element / accordion",
+  "category": "widgets",
+  "requiredAttributes": [
+    "heading"
+  ]
+}
