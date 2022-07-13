@@ -1,49 +1,91 @@
-export class CollapsibleFactory {
+const OPEN_STATE_MODIFIER = 'is-open';
+
+export class Collapsible {
     /**
-     * Show/hide element on click
-     *
      * @param {string} selector - selector for collapsible elements
      * @param {string} selectorToggle - selector for collapsible toggle
      * @param {string} selectorPanel - selector for collapsible content
      */
-    constructor({
-        selector = '.ghwp-collapsible',
-        selectorToggle = '.ghwp-collapsible-toggle',
-        selectorPanel = '.ghwp-collapsible-panel',
-    }) {
-        this.selectorToggle = selectorToggle;
-        this.selectorPanel = selectorPanel;
 
-        const collapsibleElements = document.querySelectorAll(selector);
-        Array.prototype.forEach.call(collapsibleElements, this.initItem);
+    static factory({
+        selector = '.ghwp-collapsible',
+        selectorToggle = '.ghwp-collapsible__toggle',
+        selectorPanel = '.ghwp-collapsible__panel',
+    }) {
+        document.querySelectorAll(selector).forEach((item) => {
+            const toggle = item.querySelector(selectorToggle);
+            const panel = item.querySelector(selectorPanel);
+            new Collapsible(item, toggle, panel);
+        });
     }
 
-    initItem(collapsibleThis) {
-        let toggle = collapsibleThis.querySelector(this.selectorToggle);
-        let panel = collapsibleThis.querySelector(this.selectorPanel);
+    /**
+     * @type {boolean}
+     */
+    isOpen = false;
 
-        toggle.innerHTML = `
-            <button aria-expanded="false" class="ghwp-collapsible-toggle-button">
-                ${toggle.innerHTML}
-            </button>
-            `;
+    /**
+     * @type {Element}
+     */
+    container;
 
-        let btn = toggle.querySelector('button');
+    /**
+     * @type {Element}
+     */
+    button;
 
-        const classes = Array.from(collapsibleThis.classList);
-        const panelHasAriaAttribute = panel.hasAttribute('aria-hidden');
+    /**
+     * @type {Element}
+     */
+    panel;
+
+    /**
+     * @param {Element} container
+     * @param {Element} toggle
+     * @param {?Element} panel
+     */
+    constructor(container, toggle, panel) {
+        this.container = container;
+        this.panel = panel;
+
+        if (!panel) return;
+
         if (
-            !panelHasAriaAttribute &&
-            classes.findIndex((el) => el === 'is-open') < 0
+            this.container.classList.contains(OPEN_STATE_MODIFIER) &&
+            panel.getAttribute('aria-hidden') !== 'true'
         ) {
-            panel.setAttribute('aria-hidden', true);
+            this.isOpen = true;
         }
 
-        btn.onclick = () => {
-            let expanded = btn.getAttribute('aria-expanded') === 'true';
-            btn.setAttribute('aria-expanded', !expanded);
-            panel.setAttribute('aria-hidden', expanded);
-            collapsibleThis.classList.toggle('is-open');
-        };
+        this._init(toggle);
+        this._listen();
     }
+
+    /**
+     * @param {Element} toggle
+     * @private
+     */
+    _init(toggle) {
+        const button = document.createElement('BUTTON');
+        button.classList.add('ghwp-collapsible__button');
+        button.setAttribute('aria-expanded', this.isOpen);
+        button.innerHTML = toggle.innerHTML;
+
+        Array.from(toggle.childNodes).forEach((node) => node.remove());
+        toggle.appendChild(button);
+    }
+
+    _listen() {
+        this.button.addEventListener('click', this._onClick);
+    }
+
+    _onClick = () => {
+        this.isOpen = !this.isOpen;
+
+        this.button.setAttribute('aria-expanded', this.isOpen);
+        this.panel.setAttribute('aria-hidden', !this.isOpen);
+
+        const method = this.isOpen ? 'add' : 'remove';
+        this.container.classList[method](OPEN_STATE_MODIFIER);
+    };
 }

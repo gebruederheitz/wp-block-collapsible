@@ -1,0 +1,26 @@
+# Tools & Utilities
+.babelrc
+.eslintignore
+.eslintrc.json
+.nvmrc
+.phpcs.xml
+.phpstan.neon
+.postcssrc
+.prettierrc
+.release-it.yaml
+.rollup-config.js
+.stylelintrc
+Gulpfile.esm.js
+Makefile
+
+# Sources
+index.js
+editor/
+frontend/
+
+# PHP files
+template/
+php/
+composer.json
+composer.lock
+vendor/

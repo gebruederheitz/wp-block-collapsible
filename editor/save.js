@@ -21,31 +21,31 @@ export const saveStatic = (props) => {
     return (
         <div
             className={classnames([
-                'ghwp-collapsible ghwp-accordion__item',
+                'ghwp-collapsible',
                 {
                     'is-open': initiallyOpen,
                 },
             ])}
         >
             <div
-                className="ghwp-collapsible-toggle ghwp-accordion__item-title"
+                className="ghwp-collapsible__toggle"
                 data-ghwp-pretty-name={prettyName}
             >
-                <span className="ghwp-accordion__item-title-text">
+                <span className="ghwp-collapsible__title">
                     <RichText.Content value={heading} />
                     {hasSubtitle && (
-                        <span className="ghwp-collapsible-subtitle">
+                        <span className="ghwp-collapsible__subtitle">
                             {subtitle}
                         </span>
                     )}
                 </span>
-                <hr className="ghwp-accordion__item-title-line" />
-                <span className="ghwp-accordion__item-title-arrow" />
+                <hr className="ghwp-collapsible__separator" />
+                <span className="ghwp-collapsible__indicator" />
             </div>
 
             {!!(innerBlocks.length || inner) && (
                 <div
-                    className="ghwp-collapsible-panel ghwp-accordion__item-content"
+                    className="ghwp-collapsible__panel"
                     aria-hidden={initiallyOpen}
                 >
                     <InnerBlocks.Content />

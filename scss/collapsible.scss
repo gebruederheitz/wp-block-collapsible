@@ -2,6 +2,8 @@
 // --------------------------------------------------------------------
 @use "./mixins";
 
+$base-font-size: 1rem !default;
+
 $title-color: #4a4d4a !default;
 $title-hover-color: #0080c8 !default;
 $title-active-color: #73b128 !default;
@@ -22,36 +24,16 @@ $indicator-height: 0.8125em !default;
 $content-border-left: 2px solid $title-active-color !default;
 
 .ghwp-accordion {
-    font-size: 1rem;
+    font-size: $base-font-size;
     list-style-type: none;
     margin: 0;
     padding: 0;
-
-    $block: &;
-
-    &.is-style-small {
-        #{$block}__item {
-            &-title {
-                margin: 0.5em 0;
-                padding: 0.625em 0;
-
-                &-text {
-                    font-size: 1em;
-                }
-
-                &-arrow {
-                    height: 0.625em;
-                    width: 1.125em;
-                }
-            }
-        }
-    }
 }
 
-.ghwp-accordion__item {
-    font-size: 1rem;
+.ghwp-collapsible {
+    font-size: $base-font-size;
 
-    &-title {
+    &__toggle {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -73,40 +55,12 @@ $content-border-left: 2px solid $title-active-color !default;
             }
         }
 
-        &-text,
-        :not(.ghwp-collapsible__subtitle):not(button, button *):not(hr) {
-            font-size: $title-font-size;
-            color: $title-color;
-            text-decoration: none;
-            text-transform: $title-text-transform;
-            font-family: $title-font;
-        }
-
-        &-line {
-            border: none;
-            border-top: $line-thickness solid $line-color;
-            display: flex;
-            flex-grow: 1;
-            margin: 0 2em;
-        }
-
-        &-arrow {
-            display: block;
-            width: $indicator-width;
-            height: $indicator-height;
-            background-image: $indicator-image;
-            background-repeat: no-repeat;
-            background-size: cover;
-            transition: transform 0.2s ease-in-out;
-        }
-        $title: &;
-
         &:hover {
-            #{$title}-text {
+            .ghwp-collapsible__title {
                 color: $title-hover-color;
             }
 
-            #{$title}-arrow {
+            .ghwp-collapsible__indicator {
                 background-image: $indicator-hover-image;
             }
         }
@@ -119,7 +73,43 @@ $content-border-left: 2px solid $title-active-color !default;
         }
     }
 
-    &-content {
+    &__title {
+        font-size: $title-font-size;
+        color: $title-color;
+        text-decoration: none;
+        text-transform: $title-text-transform;
+        font-family: $title-font;
+
+        .is-open & {
+            font-family: $title-active-font;
+            color: $title-active-color;
+        }
+    }
+
+    &__separator {
+        border: none;
+        border-top: $line-thickness solid $line-color;
+        display: flex;
+        flex-grow: 1;
+        margin: 0 2em;
+    }
+
+    &__indicator {
+        display: block;
+        width: $indicator-width;
+        height: $indicator-height;
+        background-image: $indicator-image;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transition: transform 0.2s ease-in-out;
+
+        .is-open & {
+            transform: rotate(180deg);
+            background-image: $indicator-active-image;
+        }
+    }
+
+    &__panel {
         border-left: $content-border-left;
         padding-left: 2em;
         margin-top: 0;
@@ -129,33 +119,12 @@ $content-border-left: 2px solid $title-active-color !default;
         max-height: 0;
         transition: max-height 0.2s linear, margin-top 0.2s linear,
             margin-bottom 0.2s linear !important;
-    }
 
-    $item: &;
-
-    &.is-open {
-        #{$item}-title {
-            &-text {
-                font-family: $title-active-font;
-                color: $title-active-color;
-            }
-
-            &-arrow {
-                transform: rotate(180deg);
-                background-image: $indicator-active-image;
-            }
-        }
-
-        #{$item}-content {
+        .is-open & {
             margin-top: 2em;
             margin-bottom: 4em;
             height: auto;
             max-height: 1080px !important;
-            overflow-y: auto;
-        }
-
-        #{$item}-content--limited {
-            max-height: 50vh;
             overflow-y: auto;
         }
     }
