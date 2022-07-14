@@ -32,7 +32,6 @@ const Edit = (props) => {
     const classes = classnames([
         className,
         'ghwp-collapsible',
-        'ghwp-accordion__item',
         {
             'is-open': isSelected || focusWithin || initiallyOpen,
         },
@@ -42,37 +41,35 @@ const Edit = (props) => {
         <>
             <CollapseControls {...props} />
             <div className={classes}>
-                <div className="ghwp-collapsible-toggle ghwp-accordion__item-title">
+                <div className="ghwp-collapsible__toggle">
                     <button
                         style={{ margin: 0 }}
-                        className="ghwp-accordion__item-title-text"
+                        className="ghwp-collapsible__button"
                     >
-                        <RichText
-                            value={heading}
-                            onChange={(heading) => {
-                                setAttributes({ heading });
-                            }}
-                            placeholder={__('Collapsible title', 'ghwp')}
-                        />
-                        {hasSubtitle && (
+                        <span className="ghwp-collapsible__title">
                             <RichText
-                                className="ghwp-collapsible-subtitle"
-                                value={subtitle}
-                                onChange={(subtitle) => {
-                                    setAttributes({ subtitle });
+                                value={heading}
+                                onChange={(heading) => {
+                                    setAttributes({ heading });
                                 }}
-                                placeholder={__('Subtitle', 'ghwp')}
+                                placeholder={__('Collapsible title', 'ghwp')}
                             />
-                        )}
-                        <hr className="ghwp-accordion__item-title-line" />
-                        <div className="ghwp-collapsible-toggle">
-                            <button className="ghwp-collapsible-toggle-button">
-                                <span className="ghwp-accordion__item-title-arrow" />
-                            </button>
-                        </div>
+                            {hasSubtitle && (
+                                <RichText
+                                    className="ghwp-collapsible__subtitle"
+                                    value={subtitle}
+                                    onChange={(subtitle) => {
+                                        setAttributes({ subtitle });
+                                    }}
+                                    placeholder={__('Subtitle', 'ghwp')}
+                                />
+                            )}
+                        </span>
+                        <hr className="ghwp-collapsible__separator" />
+                        <span className="ghwp-collapsible__indicator" />
                     </button>
                 </div>
-                <div className="ghwp-collapsible-panel ghwp-accordion__item-content">
+                <div className="ghwp-collapsible__panel">
                     <InnerBlocks
                         allowedBlocks={ALLOWED_CHILDREN}
                         template={[['core/paragraph']]}

@@ -26,3 +26,18 @@
         z-index: auto;
     }
 }
+
+@mixin border-generator($color, $width, $show-top, $show-right, $show-bottom, $show-left) {
+    @if ($show-top) {
+        border-top: $width solid $color;
+    }
+    @if ($show-right) {
+        border-right: $width solid $color;
+    }
+    @if ($show-bottom) {
+        border-bottom: $width solid $color;
+    }
+    @if ($show-left) {
+        border-left: $width solid $color;
+    }
+}

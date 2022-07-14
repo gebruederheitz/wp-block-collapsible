@@ -1,6 +1,6 @@
 // BLOCK: COLLAPSIBLE
 // --------------------------------------------------------------------
-@use "./mixins";
+@use './mixins';
 
 $base-font-size: 1rem !default;
 
@@ -12,16 +12,42 @@ $title-active-font: null !default;
 $title-font-size: 1.125em !default;
 $title-text-transform: uppercase !default;
 
+$subtitle-color: $title-color !default;
+$subtitle-font-size: null !default;
+$subtitle-font-weight: null !default;
+
+$show-line: true !default;
 $line-color: #e7e7e7 !default;
 $line-thickness: 2px !default;
+$line-space: 1em !default;
 
 $indicator-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23a0a0a0' viewBox='0 0 27 15'%3E%3Cpath d='M14.313 14.361l12-12c.5-.5.5-1.2 0-1.7s-1.2-.5-1.7 0l-11.1 11.2-11.2-11.2c-.5-.5-1.2-.5-1.7 0-.2.2-.3.5-.3.8 0 .3.1.7.3.9l12 12a1.2 1.2 0 001.7 0z'/%3E%3C/svg%3E") !default;
 $indicator-hover-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230080c8' viewBox='0 0 27 15'%3E%3Cpath d='M14.313 14.361l12-12c.5-.5.5-1.2 0-1.7s-1.2-.5-1.7 0l-11.1 11.2-11.2-11.2c-.5-.5-1.2-.5-1.7 0-.2.2-.3.5-.3.8 0 .3.1.7.3.9l12 12a1.2 1.2 0 001.7 0z'/%3E%3C/svg%3E") !default;
 $indicator-active-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2373b128' viewBox='0 0 27 15'%3E%3Cpath d='M14.313 14.361l12-12c.5-.5.5-1.2 0-1.7s-1.2-.5-1.7 0l-11.1 11.2-11.2-11.2c-.5-.5-1.2-.5-1.7 0-.2.2-.3.5-.3.8 0 .3.1.7.3.9l12 12a1.2 1.2 0 001.7 0z'/%3E%3C/svg%3E") !default;
 $indicator-width: 1.5em !default;
 $indicator-height: 0.8125em !default;
+$indicator-transform: none !default;
+$indicator-open-transform: rotate(180deg) !default;
 
-$content-border-left: 2px solid $title-active-color !default;
+$toggle-show-border: false !default;
+$toggle-border-color: $title-color !default;
+$toggle-border-width: 1px !default;
+$toggle-background: transparent !default;
+$toggle-hover-background: $toggle-background !default;
+$toggle-active-background: $toggle-background !default;
+
+$margin: 1em 0 !default;
+$toggle-button-padding: 0.625em 0 !default;
+
+$panel-border-color: $title-active-color !default;
+$panel-border-width: 2px !default;
+$panel-border-show-top: false !default;
+$panel-border-show-right: false !default;
+$panel-border-show-bottom: false !default;
+$panel-border-show-left: true !default;
+$panel-padding: 0 0 0 2em !default;
+$panel-open-margin: 2em 0 4em 0 !default;
+$panel-max-height: 1080px !default;
 
 .ghwp-accordion {
     font-size: $base-font-size;
@@ -32,20 +58,28 @@ $content-border-left: 2px solid $title-active-color !default;
 
 .ghwp-collapsible {
     font-size: $base-font-size;
+    margin: $margin;
 
     &__toggle {
+        align-items: center;
+        background-color: $toggle-background;
         display: flex;
         flex-direction: row;
-        align-items: center;
+        position: relative;
+        transition: background-color 200ms ease;
+
+        @if ($toggle-show-border) {
+            border: $toggle-border-width solid $toggle-border-color;
+        }
 
         button {
             @include mixins.unstyled-button;
 
+            align-items: center;
             display: flex;
             flex-direction: row;
-            align-items: center;
-            margin: 1em 0;
-            padding: 0.625em 0;
+            justify-content: space-between;
+            padding: $toggle-button-padding;
             width: 100%;
 
             &:hover,
@@ -56,6 +90,8 @@ $content-border-left: 2px solid $title-active-color !default;
         }
 
         &:hover {
+            background-color: $toggle-hover-background;
+
             .ghwp-collapsible__title {
                 color: $title-hover-color;
             }
@@ -70,6 +106,14 @@ $content-border-left: 2px solid $title-active-color !default;
         &:active {
             box-shadow: none !important;
             outline: 0 !important;
+        }
+
+        .is-open & {
+            background-color: $toggle-active-background;
+
+            &:hover {
+                background-color: $toggle-hover-background;
+            }
         }
     }
 
@@ -86,12 +130,29 @@ $content-border-left: 2px solid $title-active-color !default;
         }
     }
 
-    &__separator {
-        border: none;
-        border-top: $line-thickness solid $line-color;
-        display: flex;
-        flex-grow: 1;
-        margin: 0 2em;
+    &__subtitle {
+        color: $subtitle-color;
+        display: block;
+        font-size: $subtitle-font-size;
+        font-weight: $subtitle-font-weight;
+    }
+
+    & hr.ghwp-collapsible__separator {
+        &,
+        .entry-content & {
+            @if ($show-line) {
+                background-color: $line-color;
+                border: none;
+                display: block;
+                flex-grow: 1;
+                height: $line-thickness;
+                left: 0;
+                margin: 0 $line-space;
+                max-width: none;
+            } @else {
+                display: none;
+            }
+        }
     }
 
     &__indicator {
@@ -100,32 +161,41 @@ $content-border-left: 2px solid $title-active-color !default;
         height: $indicator-height;
         background-image: $indicator-image;
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: contain;
         transition: transform 0.2s ease-in-out;
+        transform: $indicator-transform;
 
         .is-open & {
-            transform: rotate(180deg);
+            transform: $indicator-open-transform;
             background-image: $indicator-active-image;
         }
     }
 
     &__panel {
-        border-left: $content-border-left;
-        padding-left: 2em;
+        border: 0;
         margin-top: 0;
         margin-bottom: 0;
-        position: relative;
-        overflow: hidden;
         max-height: 0;
+        overflow: hidden;
+        padding: $panel-padding;
+        position: relative;
         transition: max-height 0.2s linear, margin-top 0.2s linear,
             margin-bottom 0.2s linear !important;
 
         .is-open & {
-            margin-top: 2em;
-            margin-bottom: 4em;
+            margin: $panel-open-margin;
             height: auto;
-            max-height: 1080px !important;
+            max-height: $panel-max-height !important;
             overflow-y: auto;
+
+            @include mixins.border-generator(
+                $panel-border-color,
+                $panel-border-width,
+                $panel-border-show-top,
+                $panel-border-show-right,
+                $panel-border-show-bottom,
+                $panel-border-show-left
+            );
         }
     }
 }

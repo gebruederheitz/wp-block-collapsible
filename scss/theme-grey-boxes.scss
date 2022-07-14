@@ -1,0 +1,59 @@
+$title-color: #333 !default;
+$title-font: null !default;
+$title-font-size: 1em !default;
+$title-text-transform: none !default;
+$subtitle-color: lighten($title-color, 0.3) !default;
+$subtitle-font-size: 0.9em !default;
+$subtitle-font-weight: 400 !default;
+$border-color: #eee !default;
+$indicator-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23c0c0c0' viewBox='0 0 27 15'%3E%3Cpath d='M14.313 14.361l12-12c.5-.5.5-1.2 0-1.7s-1.2-.5-1.7 0l-11.1 11.2-11.2-11.2c-.5-.5-1.2-.5-1.7 0-.2.2-.3.5-.3.8 0 .3.1.7.3.9l12 12a1.2 1.2 0 001.7 0z'/%3E%3C/svg%3E") !default;
+$toggle-hover-background: #eee !default;
+
+@use './collapsible' with (
+    $base-font-size: 1rem,
+    // make sure borders collapse
+    $margin: 0 0 -1px 0,
+
+    $title-color: $title-color,
+    $title-hover-color: $title-color,
+    $title-active-color: $title-color,
+    $title-font: $title-font,
+    $title-active-font: $title-font,
+    $title-font-size: $title-font-size,
+    $title-text-transform: $title-text-transform,
+
+    $subtitle-color: $subtitle-color,
+    $subtitle-font-size: $subtitle-font-size,
+    $subtitle-font-weight: $subtitle-font-weight,
+
+    $show-line: false,
+    //$line-color: #e7e7e7,
+    //$line-thickness: 2px,
+    //$line-space: 1em,
+    //$indicator-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23a0a0a0' viewBox='0 0 27 15'%3E%3Cpath d='M14.313 14.361l12-12c.5-.5.5-1.2 0-1.7s-1.2-.5-1.7 0l-11.1 11.2-11.2-11.2c-.5-.5-1.2-.5-1.7 0-.2.2-.3.5-.3.8 0 .3.1.7.3.9l12 12a1.2 1.2 0 001.7 0z'/%3E%3C/svg%3E"),
+    $indicator-image: $indicator-image,
+    $indicator-hover-image: $indicator-image,
+    $indicator-active-image: $indicator-image,
+    //$indicator-hover-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230080c8' viewBox='0 0 27 15'%3E%3Cpath d='M14.313 14.361l12-12c.5-.5.5-1.2 0-1.7s-1.2-.5-1.7 0l-11.1 11.2-11.2-11.2c-.5-.5-1.2-.5-1.7 0-.2.2-.3.5-.3.8 0 .3.1.7.3.9l12 12a1.2 1.2 0 001.7 0z'/%3E%3C/svg%3E"),
+    //$indicator-active-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2373b128' viewBox='0 0 27 15'%3E%3Cpath d='M14.313 14.361l12-12c.5-.5.5-1.2 0-1.7s-1.2-.5-1.7 0l-11.1 11.2-11.2-11.2c-.5-.5-1.2-.5-1.7 0-.2.2-.3.5-.3.8 0 .3.1.7.3.9l12 12a1.2 1.2 0 001.7 0z'/%3E%3C/svg%3E"),
+    $indicator-width: 0.8em,
+    //$indicator-height: 0.8125em,
+    $indicator-transform: rotate(-90deg),
+    $indicator-open-transform: rotate(0deg),
+    $toggle-show-border: true,
+    $toggle-border-color: $border-color,
+    $toggle-border-width: 1px,
+    $toggle-hover-background: $toggle-hover-background,
+    $toggle-button-padding: 1em 2em,
+
+    $panel-border-color: $border-color,
+    $panel-border-width: 1px,
+    $panel-border-show-top: false,
+    $panel-border-show-right: true,
+    $panel-border-show-bottom: true,
+    $panel-border-show-left: true,
+    $panel-padding: 0 2em,
+    //$panel-open-margin: 2em 0 4em 0,
+    $panel-open-margin: 0,
+    $panel-max-height: 1080px
+);

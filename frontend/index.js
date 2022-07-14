@@ -11,7 +11,7 @@ export class Collapsible {
         selector = '.ghwp-collapsible',
         selectorToggle = '.ghwp-collapsible__toggle',
         selectorPanel = '.ghwp-collapsible__panel',
-    }) {
+    } = {}) {
         document.querySelectorAll(selector).forEach((item) => {
             const toggle = item.querySelector(selectorToggle);
             const panel = item.querySelector(selectorPanel);
@@ -73,6 +73,8 @@ export class Collapsible {
 
         Array.from(toggle.childNodes).forEach((node) => node.remove());
         toggle.appendChild(button);
+
+        this.button = button;
     }
 
     _listen() {

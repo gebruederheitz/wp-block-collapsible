@@ -16,7 +16,7 @@
             <?= $heading ?>
             <?php if ($hasSubtitle): ?>
                 <span class="ghwp-collapsible__subtitle">
-                    {subtitle}
+                    <?= $subtitle ?>
                 </span>
             <?php endif; ?>
         </span>
@@ -26,7 +26,7 @@
     <?php if (!empty($innerBlocks)): ?>
         <div
             class="ghwp-collapsible__panel"
-            aria-hidden="<?= $initiallyOpen === true ?>>"
+            aria-hidden="<?= $initiallyOpen === true ? 'false' : 'true' ?>"
         >
             <?= $innerBlocks ?>
         </div>

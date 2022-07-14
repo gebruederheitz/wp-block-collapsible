@@ -46,7 +46,7 @@ export const saveStatic = (props) => {
             {!!(innerBlocks.length || inner) && (
                 <div
                     className="ghwp-collapsible__panel"
-                    aria-hidden={initiallyOpen}
+                    aria-hidden={!initiallyOpen}
                 >
                     <InnerBlocks.Content />
                 </div>
