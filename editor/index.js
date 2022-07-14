@@ -11,7 +11,7 @@ const { __ } = i18n;
 export function register(options = {}) {
     const {
         category = meta.category,
-        icon = 'file',
+        icon = 'flip-vertical',
         edit = defaultEdit,
         save = defaultSave,
         attributes = defaultAttributes,
